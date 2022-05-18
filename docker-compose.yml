@@ -3,9 +3,7 @@ version: '3.7'
 services:
   gitlab-runner:
     restart: always
-    # image: gitlab/gitlab-runner:${SERVICE_GITLAB_RUNNER_IMAGE_VERSION}
-    build:
-      context: ./image
+    image: whatwewant/gitlab-runner:${SERVICE_GITLAB_RUNNER_IMAGE_VERSION}
     hostname: ${SERVICE_GITLAB_RUNNER_COMPANY}
     volumes:
       # - ${SERVICE_CONFIGS}/gitlab-runner:/etc/gitlab-runner
