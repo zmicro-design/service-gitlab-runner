@@ -1,0 +1,17 @@
+#!/bin/bash
+
+service::config_set() {
+  config::check_or_set $@ $SERVICE_CONFIG
+}
+
+check() {
+  if [ "$DEBUG" = "true" ]; then
+    log::info "[DEBUG][service][gitlab-runner]: $SERVICE_CONFIG"
+    cat $SERVICE_CONFIG
+  fi
+
+  service::config_set SERVICE_GITLAB_RUNNER_COMPANY text
+  service::config_set SERVICE_GITLAB_RUNNER_TOKEN text
+}
+
+check $@

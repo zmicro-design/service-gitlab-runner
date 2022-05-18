@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  gitlab-runner:
+    restart: always
+    # image: gitlab/gitlab-runner:${SERVICE_GITLAB_RUNNER_IMAGE_VERSION}
+    build:
+      context: ./image
+    hostname: ${SERVICE_GITLAB_RUNNER_COMPANY}
+    volumes:
+      # - ${SERVICE_CONFIGS}/gitlab-runner:/etc/gitlab-runner
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    environment:
+      GITLAB_URL: ${SERVICE_GITLAB_URL}
+      GITLAB_RUNNER_TOKEN: ${SERVICE_GITLAB_RUNNER_TOKEN}
+      GITLAB_RUNNER_EXECUTOR: ${SERVICE_GITLAB_RUNNER_EXECUTOR}
+      GITLAB_RUNNER_DOCKER_IMAGE: ${SERVICE_GITLAB_RUNNER_DOCKER_IMAGE}
+      GITLAB_RUNNER_DESCRIPTION: ${SERVICE_GITLAB_RUNNER_DESCRIPTION}
+      GITLAB_RUNNER_DOCKER_NETWORK: ${SERVICE_GITLAB_RUNNER_DOCKER_NETWORK}
+
+networks:
+  default:
+    external: true
+    name: compose-ingress
